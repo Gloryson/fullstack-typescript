@@ -42,7 +42,7 @@ async function connect () {
           break;
         }
 
-        default: res.send('Idiot');
+        default: res.send('You are idiot!');
 
       }
       
