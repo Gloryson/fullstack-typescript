@@ -1,11 +1,25 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import { MongoClient } from 'mongodb';
+import multer from 'multer';
+import path from 'path';
+
 
 
 const app = express();
 const port = process.env.PORT || 3001;
 const mongoClient = new MongoClient('mongodb://127.0.0.1:27017/');
+
+
+const storage = multer.diskStorage({
+  destination: (req, file, callback) => callback(null, 'uploaded_images/'),
+  filename: (req, file, callback) => {
+    const extension = path.extname(file.originalname);
+    const filename = file.fieldname + '-' + Date.now() + extension;
+    callback(null, filename);
+  },
+});
+const upload = multer({ storage });
 
 
 app.use(cors()).listen(port, () => {
@@ -15,6 +29,10 @@ app.use(cors()).listen(port, () => {
 
 
 async function connect () {
+
+  app.post('/upload-image', upload.single('uploaded-file'), (req, res, next) => {
+    res.send({ success: true });
+  })
 
   app.get('/db/:string', async (req: Request, res: Response) => {
 
