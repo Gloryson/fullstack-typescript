@@ -1,0 +1,28 @@
+.database__page {
+  display: grid;
+  padding: 60px;
+  div {
+    border: 1px solid red;
+  }
+  .db__item {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    place-self: start center;
+    width: 400px;
+    height: 40px;
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+
+  .db__item__title {
+    grid-column: 1/9;
+  }
+
+  .db__item__edit {
+    grid-column: 9;
+  }
+
+  .db__item__delete {
+    grid-column: 10;
+  }
+}

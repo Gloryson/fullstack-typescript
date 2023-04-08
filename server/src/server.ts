@@ -19,6 +19,7 @@ const storage = multer.diskStorage({
     callback(null, filename);
   },
 });
+
 const upload = multer({ storage });
 
 
@@ -30,7 +31,7 @@ app.use(cors()).listen(port, () => {
 
 async function connect () {
 
-  app.post('/upload-image', upload.single('uploaded-file'), (req, res, next) => {
+  app.post('/upload-image', upload.single('image'), (req, res, next) => {
     res.send({ success: true });
   })
 
