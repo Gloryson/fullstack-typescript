@@ -1,0 +1,50 @@
+.db__item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  width: 400px;
+  height: 40px;
+  padding: 5px 10px;
+  box-shadow: #e3e3e3 0 0 5px 1px;
+  border-radius: 5px;
+
+  .db__item__title, input {
+    display: flex;
+    align-items: center;
+    width: calc(100% - 65px);
+    height: 25px;
+    padding-left: 5px;
+  }
+  
+  input {
+    outline: 1px solid #d3d3d3;
+    border-radius: 2px;
+  }
+  
+  .db__item__edit, .db__item__delete, .db__item__edit__with__input {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    filter: invert(23%) sepia(89%) saturate(1619%) hue-rotate(182deg) brightness(98%) contrast(92%);
+  }
+  
+  .db__item__edit {
+    background: url(../../img/pencil.svg) no-repeat center right;
+    background-size: 85%;
+  }
+  
+  .db__item__edit__with__input {
+    background: url(../../img/check.svg) no-repeat center right;
+    background-size: 85%;
+  }
+  
+  .db__item__delete {
+    background: url(../../img/trash.svg) no-repeat center right;
+    background-size: 85%;
+  }
+  
+  .off {
+    display: none;
+  }
+  
+}

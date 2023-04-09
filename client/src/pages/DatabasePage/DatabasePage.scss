@@ -1,28 +1,45 @@
 .database__page {
-  display: grid;
-  padding: 60px;
-  div {
-    border: 1px solid red;
-  }
-  .db__item {
-    display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    place-self: start center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 30px;
+
+  .db__add__item {
+    display: flex;
+    align-items: center;
+    gap: 1px;
     width: 400px;
     height: 40px;
-    padding: 5px 10px;
-    border-radius: 5px;
-  }
 
-  .db__item__title {
-    grid-column: 1/9;
-  }
+    input {
+      width: 80%;
+      height: 100%;
+      border: 2px solid lightgray;
+      border-radius: 5px;
+      padding-left: 5px;
+      font-size: inherit;
 
-  .db__item__edit {
-    grid-column: 9;
-  }
+      &:focus {
+        outline: 3px solid #1978b4;
+        outline-offset: -3px;
+      }
+    }
 
-  .db__item__delete {
-    grid-column: 10;
+    button {
+      width: 20%;
+      height: 100%;
+      border: 2px solid lightgray;
+      border-radius: 5px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: whitesmoke;
+      }
+
+      &:active {
+        transform: scale(0.99);
+      }
+    }
   }
 }

@@ -1,8 +1,7 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
-import { MongoClient } from 'mongodb';
-import multer from 'multer';
-import path from 'path';
+import { MongoClient, ObjectId } from 'mongodb';
+import { upload } from './middlewares';
 
 
 
@@ -11,21 +10,9 @@ const port = process.env.PORT || 3001;
 const mongoClient = new MongoClient('mongodb://127.0.0.1:27017/');
 
 
-const storage = multer.diskStorage({
-  destination: (req, file, callback) => callback(null, 'uploaded_images/'),
-  filename: (req, file, callback) => {
-    const extension = path.extname(file.originalname);
-    const filename = file.fieldname + '-' + Date.now() + extension;
-    callback(null, filename);
-  },
-});
-
-const upload = multer({ storage });
-
-
 app.use(cors()).listen(port, () => {
   console.log(`Application started on port ${port}!`);
-})
+});
 
 
 
@@ -44,20 +31,29 @@ async function connect () {
       switch (req.params.string) {
 
         case 'add': {
-          await collection.insertOne({text: 'Lorem', completed: true});
-          res.redirect('/db/show');
+          await collection.insertOne({text: req.query.text});
+          res.send({ success: true });
           break;
         }
 
         case 'del': {
-          await collection.deleteOne({text: 'Lorem'});
-          res.redirect('/db/show');
+          let id = req.query.id as string;
+          await collection.deleteOne({_id: new ObjectId(id)});
+          res.send({ success: true });
           break;
         }
 
-        case 'show': {
-          let goods = await collection.find().toArray();
-          res.send(goods);
+        case 'edit': {
+          let id = req.query.id as string;
+          let newText = req.query.text;
+          await collection.updateOne({_id: new ObjectId(id)}, {$set: {text: newText}});
+          res.send({ success: true });
+          break;
+        }
+
+        case 'get': {
+          let list = await collection.find().toArray();
+          res.send(list);
           break;
         }
 
