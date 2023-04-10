@@ -19,7 +19,7 @@ export function RegistrationPage () {
       <input 
         type='password'
         placeholder='Password'
-        pattern='^[a-zA-Z0-9_-]{8,50}'
+        pattern='^[a-zA-Z0-9_-]{8,50}$'
         onChange={(e) => setConfirmPasswordPattern(() => e.target.value)}
       />
 

@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { DatabaseItem, Spiner } from '../../components';
 import { useAppDispatch, useAppSelector } from '../../store/store';
-import { useGetDB } from '../../features/useGetDB';
-import { addItemToDB } from '../../features/dbFunctions';
+import { useGetDB, addItemToDB } from '../../features';
 import { setList } from '../../store/dbSlice';
 import './DatabasePage.scss';
 

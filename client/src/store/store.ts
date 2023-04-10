@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import dbSlice from './dbSlice';
+import userSlice from './userSlice';
 
 
 
@@ -9,6 +10,7 @@ import dbSlice from './dbSlice';
 const store = configureStore({
   reducer: {
     db: dbSlice,
+    user: userSlice,
   }
 })
 

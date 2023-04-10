@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAppDispatch } from '../../store/store';
-import { deleteItemInDB, editItemInDB } from '../../features/dbFunctions';
+import { deleteItemInDB, editItemInDB } from '../../features';
 import { setList } from '../../store/dbSlice';
 import './DatabaseItem.scss';
 

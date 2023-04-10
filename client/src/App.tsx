@@ -1,12 +1,16 @@
 import { Route, Routes } from 'react-router-dom';
 import { Navigation } from './components';
 import { AuthorizationPage, DatabasePage, RegistrationPage, UploadImagePage } from './pages';
+import { useAuth } from './features';
 
 
 
 
 
 export default function App() {
+
+  useAuth();
+
   return (
     <>
       <Navigation />
