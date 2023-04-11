@@ -1,0 +1,25 @@
+.sign__out {
+  display: grid;
+  place-content: center;
+  place-items: center;
+  gap: 30px;
+  height: calc(100vh - 60px);
+
+  button {
+    width: 150px;
+    height: 40px;
+    outline: 2px solid lightgrey;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 16px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: whitesmoke;
+    }
+
+    &:active {
+      transform: scale(0.99);
+    }
+  }
+}

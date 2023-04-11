@@ -16,16 +16,23 @@ export class AuthorizationHandler {
         const collection = db.collection('users');
 
         switch (req.params.string) {
+
           case 'login': {
             const { email, password } = req.query;
-            const user = await collection.findOne({email: email, password: password});
+            const user = await collection.findOne({email: email});
             if (user) {
-              res.cookie('authTokenFuckMyBrain', user.token, {maxAge: 3600000});
-              res.send(user);
+              if (user.password === password) {
+                res.cookie('authTokenFuckMyBrain', user.token, {maxAge: 600000});
+                res.send(user);
+              } else {
+                res.send({alert: 'Wrong password!'});
+              } 
+            } else {
+              res.send({alert: 'The user with such email does not exist!'});
             }
-            else res.send({alert: 'Wrong data!'});
             break;
           }
+
           case 'check': {
             const authToken = req.cookies.authTokenFuckMyBrain;
             const user = await collection.findOne({token: authToken});
@@ -33,19 +40,33 @@ export class AuthorizationHandler {
             else res.send({alert: 'Not authorized!'});
             break;
           }
-          case 'edit': {
-            const id = req.query.id as string;
-            const newText = req.query.text;
-            // await collection.updateOne({ _id: new ObjectId(id) }, { $set: { text: newText } });
-            res.send({ success: true });
+
+          case 'register': {
+            const { email, password, confirm } = req.query;
+            const user = await collection.findOne({email: email});
+            if (user) {
+              res.send({alert: 'The user with such email is already registered!'});
+            } else {
+              if (password === confirm) {
+                const user = { email: email, password: password, token: `${email}${new Date().toISOString()}${password}` };
+                await collection.insertOne(user);
+                res.cookie('authTokenFuckMyBrain', user.token, {maxAge: 600000});
+                res.send(user);
+              } else {
+                res.send({alert: 'Password is not confirmed!'});
+              }
+            }
             break;
           }
-          case 'get': {
-            const list = await collection.find().toArray();
-            res.send(list);
+
+          case 'sign-out': {
+            res.clearCookie('authTokenFuckMyBrain');
+            res.send({ alert: 'You are logged out!' });
             break;
           }
+
           default: res.send('Invalid request');
+          
         } 
       } catch (error) {
         res.send(error);

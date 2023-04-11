@@ -1,12 +1,7 @@
-.is__auth__message {
-  display: grid;
-  place-content: center;
-  height: 75vh;
-}
-
 form {
   display: grid;
   place-content: center;
+  place-items: center;
   gap: 5px;
   height: calc(100vh - 60px);
 

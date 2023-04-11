@@ -2,37 +2,42 @@ import { useState } from 'react';
 import { checkEmail, checkPassword } from '../../features';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 import { setUser } from '../../store/userSlice';
+import { SignOut } from '../../components';
 import './AuthorizationPage.scss';
 
 
 interface authInputValues {
   email: string;
   password: string;
+  title: string;
 }
 
 
 export function AuthorizationPage () {
 
-  const [values, setValues] = useState<authInputValues>({email: '', password: ''});
+  const initialValues = {email: '', password: '', title: 'Enter email and password.'};
+
+  const [values, setValues] = useState<authInputValues>(initialValues);
   const { isAuth } = useAppSelector(state => state.user);
   const dispatch = useAppDispatch();
 
 
   function submitAuth(event: React.FormEvent<HTMLFormElement>) {
-    if (!checkEmail(values.email) || !checkPassword(values.password)) return;
     event.preventDefault();
+    if (!checkEmail(values.email) || !checkPassword(values.password)) return;
     fetch(`http://${window.location.hostname}:3001/auth/login?email=${values.email}&password=${values.password}`, {
       credentials: 'include'
     })
       .then((response) => response.json())
       .then((data) => {
         if (data.alert) {
-          setValues({email: data.alert, password: data.alert});
+          setValues(state => ({...state, title: data.alert}));
           setTimeout(() => {
-            setValues({email: '', password: ''});
-          }, 1000)
+            setValues(initialValues);
+          }, 2000)
         } else {
           dispatch(setUser({email: data.email, token: data.token, isAuth: true}));
+          setValues(initialValues);
         }
       })
       .catch((error) => console.error(error));
@@ -41,6 +46,8 @@ export function AuthorizationPage () {
 
   return !isAuth ? (
     <form onSubmit={submitAuth}>
+
+      <h2>{values.title}</h2>
 
       <input 
         type='email'
@@ -64,5 +71,5 @@ export function AuthorizationPage () {
       />
 
     </form>
-  ) : <h1 className='is__auth__message'>You are already authorized!</h1>
+  ) : <SignOut />
 }
