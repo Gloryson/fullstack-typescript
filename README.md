@@ -1,2 +1,2 @@
-## Fullstack application ( TypeScript )
+# Fullstack application ( TypeScript )
 TypeScript | React | Express | MongoDB
